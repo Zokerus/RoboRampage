@@ -6,7 +6,7 @@ public partial class Player : CharacterBody3D
 	[Export]
 	public float Speed = 5.0f;
 	[Export]
-	public float JumpVelocity = 4.5f;
+	public float JumpHeight = 4.5f;
 	[Export]
 	public float mouseHSensetvity = 0.001f;
 	[Export]
@@ -14,6 +14,7 @@ public partial class Player : CharacterBody3D
 
     // Get the gravity from the project settings to be synced with RigidBody nodes.
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+	private float m_fallMultiplier = 2.0f;
 	private Vector2 m_mouseMotion = Vector2.Zero;
 
 	private Node3D m_cameraPivot;
@@ -32,15 +33,22 @@ public partial class Player : CharacterBody3D
 
 		// Add the gravity.
 		if (!IsOnFloor())
-			velocity.Y -= gravity * (float)delta;
+			if (velocity.Y > 0)
+			{
+				velocity.Y -= gravity * (float)delta;
+			}
+			else
+			{
+                velocity.Y -= gravity * (float)delta * m_fallMultiplier;
+            }
 
 		// Handle Jump.
 		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
-			velocity.Y = JumpVelocity;
+			velocity.Y = Mathf.Sqrt(JumpHeight * 2.0f * gravity);
 
 		// Get the input direction and handle the movement/deceleration.
 		// As good practice, you should replace UI actions with custom gameplay actions.
-		Vector2 inputDir = Input.GetVector("right", "left", "backward", "forward");
+		Vector2 inputDir = Input.GetVector("left", "right", "forward", "backward");
 		Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 		if (direction != Vector3.Zero)
 		{
