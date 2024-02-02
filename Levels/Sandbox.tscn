@@ -1,8 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://cvj5f24l4gxok"]
 
-[ext_resource type="Texture2D" uid="uid://cqyxipkoeyw1f" path="res://Assets/Textures/Prototype/PNG/Dark/texture_07.png" id="1_grxts"]
+[ext_resource type="Material" uid="uid://cg017snmadxlt" path="res://Levels/Material/GrayMaterial.tres" id="1_85sxn"]
 [ext_resource type="PackedScene" uid="uid://clgvgiwp5qt6x" path="res://Player/Player.tscn" id="2_dg7fx"]
-[ext_resource type="Texture2D" uid="uid://cekomn8osikle" path="res://Assets/Textures/Prototype/PNG/Orange/texture_01.png" id="3_nmgdm"]
+[ext_resource type="Material" uid="uid://j1a07ipsy4i0" path="res://Levels/Material/OrangeMaterial.tres" id="3_xnoje"]
+[ext_resource type="Material" uid="uid://dfvpkxt1ct46p" path="res://Levels/Material/PurpleMaterial.tres" id="4_oq463"]
+[ext_resource type="Material" uid="uid://cf07ai12l314r" path="res://Levels/Material/GreenMaterial.tres" id="5_r4hyn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7jkdn"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -17,12 +19,6 @@ sky = SubResource("Sky_25ajn")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ov36r"]
-albedo_texture = ExtResource("1_grxts")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0mneo"]
-albedo_texture = ExtResource("3_nmgdm")
-
 [node name="Sandbox" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -34,7 +30,7 @@ shadow_enabled = true
 
 [node name="Floor" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-material_override = SubResource("StandardMaterial3D_ov36r")
+material_override = ExtResource("1_85sxn")
 use_collision = true
 size = Vector3(64, 1, 64)
 
@@ -42,25 +38,235 @@ size = Vector3(64, 1, 64)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 JumpHeight = 1.0
 
-[node name="Platform" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, 0)
-material_override = SubResource("StandardMaterial3D_0mneo")
+[node name="LevelObjects" type="Node3D" parent="."]
+
+[node name="Platform" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -18.4825, 0.5, 0.166666)
+material_override = ExtResource("3_xnoje")
 use_collision = true
 
-[node name="Platform2" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.986452, 0)
-material_override = SubResource("StandardMaterial3D_0mneo")
+[node name="Platform4" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -19.4825, 3.5, 0.166666)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+
+[node name="Platform2" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -18.4825, 0.986452, -0.833334)
+material_override = ExtResource("3_xnoje")
 use_collision = true
 size = Vector3(1, 2, 1)
 
-[node name="Platform3" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 1.48645, -1)
-material_override = SubResource("StandardMaterial3D_0mneo")
+[node name="Platform5" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -25.4825, 4.98645, -10.1333)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+size = Vector3(3, 0.5, 2)
+
+[node name="Platform6" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -27.4825, 4.98645, 9.86667)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+size = Vector3(3, 0.5, 2)
+
+[node name="Platform7" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 22.5175, 4.98645, 9.86667)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+size = Vector3(3, 0.5, 2)
+
+[node name="Platform8" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 29.5175, 4.98645, -9.13333)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+size = Vector3(3, 0.5, 2)
+
+[node name="Bridge" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 5, -28.133)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+size = Vector3(5, 0.5, 45)
+
+[node name="Platform3" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -19.4825, 1.48645, -0.333334)
+material_override = ExtResource("3_xnoje")
 use_collision = true
 size = Vector3(2, 3, 1)
 
-[node name="PlatformUnreachable" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.986452, 4.4)
-material_override = SubResource("StandardMaterial3D_0mneo")
+[node name="Platform9" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 20.0175, 0.5, -8.03333)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+
+[node name="Platform10" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(0.00260881, -0.00289759, 0.999992, 0.000706926, 0.999996, 0.00289575, -0.999996, 0.000699347, 0.00261086, 25.5175, 2, -8.03333)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+size = Vector3(1, 4, 1)
+
+[node name="Platform11" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 21.5175, 0.986452, -8.03333)
+material_override = ExtResource("3_xnoje")
 use_collision = true
 size = Vector3(1, 2, 1)
+
+[node name="Platform12" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5175, 1.48645, -8.03333)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+size = Vector3(2, 3, 1)
+
+[node name="Platform13" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 20.0175, 0.5, 28.0667)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+
+[node name="Platform14" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(0.00260881, -0.00289759, 0.999992, 0.000706926, 0.999996, 0.00289575, -0.999996, 0.000699347, 0.00261086, 25.5175, 2, 28.0667)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+size = Vector3(1, 4, 1)
+
+[node name="Platform15" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 21.5175, 0.986452, 28.0667)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+size = Vector3(1, 2, 1)
+
+[node name="Platform16" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5175, 1.48645, 28.0667)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+size = Vector3(2, 3, 1)
+
+[node name="PlatformUnreachable" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.25744, 0.986452, 4.4)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+size = Vector3(1, 2, 1)
+
+[node name="Building" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2.5, -20)
+material_override = ExtResource("4_oq463")
+use_collision = true
+size = Vector3(10, 5, 15)
+
+[node name="Building2" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2.5, 0)
+material_override = ExtResource("4_oq463")
+use_collision = true
+size = Vector3(10, 5, 15)
+
+[node name="Building3" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2.5, 20)
+material_override = ExtResource("4_oq463")
+use_collision = true
+size = Vector3(10, 5, 15)
+
+[node name="Building4" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, -20)
+material_override = ExtResource("4_oq463")
+use_collision = true
+size = Vector3(10, 5, 15)
+
+[node name="Building5" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, 0)
+material_override = ExtResource("4_oq463")
+use_collision = true
+size = Vector3(10, 5, 15)
+
+[node name="Building6" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, 20)
+material_override = ExtResource("4_oq463")
+use_collision = true
+size = Vector3(10, 5, 15)
+
+[node name="LargeFlatArea" type="CSGBox3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.880032, 0.5, -21.2757)
+material_override = ExtResource("5_r4hyn")
+use_collision = true
+size = Vector3(20, 1, 20)
+
+[node name="Slope" type="CSGPolygon3D" parent="LevelObjects"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 17, 0, 7.56454)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+polygon = PackedVector2Array(0, 0, 1, 1, 1, 0)
+depth = 5.0
+
+[node name="Slope2" type="CSGPolygon3D" parent="LevelObjects"]
+transform = Transform3D(-1.31134e-07, 0, -3, 0, 3, 0, 3, 0, -1.31134e-07, -20, 0, 15.5645)
+material_override = ExtResource("3_xnoje")
+use_collision = true
+polygon = PackedVector2Array(0, 0, 3, 1, 3, 0)
+depth = 5.0
+
+[node name="Cylinder" type="CSGCylinder3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5, 24)
+material_override = ExtResource("5_r4hyn")
+use_collision = true
+radius = 5.0
+height = 3.0
+sides = 16
+
+[node name="Cylinder2" type="CSGCylinder3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, 14)
+material_override = ExtResource("5_r4hyn")
+use_collision = true
+radius = 4.0
+sides = 16
+
+[node name="Cylinder3" type="CSGCylinder3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.5, 10)
+material_override = ExtResource("5_r4hyn")
+use_collision = true
+radius = 2.0
+height = 1.0
+sides = 16
+
+[node name="Cylinder4" type="CSGCylinder3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7, 0.5, 15)
+material_override = ExtResource("5_r4hyn")
+use_collision = true
+radius = 2.0
+height = 1.0
+sides = 16
+
+[node name="Cylinder5" type="CSGCylinder3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.3, 0.5, -14)
+material_override = ExtResource("5_r4hyn")
+use_collision = true
+radius = 2.0
+height = 1.0
+sides = 16
+
+[node name="Cylinder6" type="CSGCylinder3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3, 1.5, -16)
+material_override = ExtResource("5_r4hyn")
+use_collision = true
+radius = 2.0
+height = 1.0
+sides = 16
+
+[node name="Cylinder7" type="CSGCylinder3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3, 2.5, -18)
+material_override = ExtResource("5_r4hyn")
+use_collision = true
+radius = 2.0
+height = 1.0
+sides = 16
+
+[node name="Cylinder8" type="CSGCylinder3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.3, 3.5, -20)
+material_override = ExtResource("5_r4hyn")
+use_collision = true
+radius = 2.0
+height = 1.0
+sides = 16
+
+[node name="Cylinder9" type="CSGCylinder3D" parent="LevelObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.988, 4.5, -21)
+material_override = ExtResource("5_r4hyn")
+use_collision = true
+radius = 2.0
+height = 1.0
+sides = 16
