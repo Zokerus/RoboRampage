@@ -12,11 +12,14 @@ public partial class Hit_Scan_Weapon : Node3D
 	public float weaponDamage = 15;
 	[Export]
 	public Node3D weaponMesh = null;
+	[Export]
+	public GpuParticles3D muzzleFlash = null;
 	
 
 	private Timer m_coolDownTimer;
 	private RayCast3D m_rayCast3D;
 	private Vector3 m_weaponPosition;
+	private GpuParticles3D m_muzzelFlash;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -25,6 +28,10 @@ public partial class Hit_Scan_Weapon : Node3D
 		m_coolDownTimer = GetNode<Timer>("CoolDownTimer");
 		m_rayCast3D = GetNode<RayCast3D>("RayCast3D");
 		m_weaponPosition = weaponMesh.Position;
+		if (muzzleFlash != null )
+		{
+			muzzleFlash.Lifetime = 1.0f / fireRate;
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -42,6 +49,7 @@ public partial class Hit_Scan_Weapon : Node3D
 	{
         m_coolDownTimer.Start(1.0f / fireRate);
 		weaponMesh.Position = new Vector3(weaponMesh.Position.X, weaponMesh.Position.Y, weaponMesh.Position.Z + recoil);
+        muzzleFlash.Restart();
 		if (m_rayCast3D.IsColliding())
 		{
 			Debug.Print(m_rayCast3D.GetCollider().ToString());
