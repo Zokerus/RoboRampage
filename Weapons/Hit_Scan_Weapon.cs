@@ -54,7 +54,6 @@ public partial class Hit_Scan_Weapon : Node3D
         muzzleFlash.Restart();
 		if (m_rayCast3D.IsColliding())
 		{
-			Debug.Print(m_rayCast3D.GetCollider().ToString());
 			if(m_rayCast3D.GetCollider() is Enemy enemy)
 			{
 				enemy.HitPoints = enemy.HitPoints - (int)weaponDamage;
