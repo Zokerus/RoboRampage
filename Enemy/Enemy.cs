@@ -11,6 +11,10 @@ public partial class Enemy : CharacterBody3D
 	public float aggroRange = 12.0f;
 	[Export]
 	public float attackRange = 1.5f;
+	[Export]
+	public int maxHitPoints = 100;
+	[Export]
+	public int damage = 20;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
@@ -18,6 +22,24 @@ public partial class Enemy : CharacterBody3D
 	private AnimationPlayer m_animPlayer;
 	private Player m_player;
 	private bool m_provoked = false;
+	private int m_hitpoints = 100;
+
+	public int HitPoints
+	{
+		get { return m_hitpoints; }
+		set 
+		{ 
+			m_hitpoints = value; 
+			if (m_hitpoints <= 0)
+			{
+				this.QueueFree();
+			}
+			else
+			{
+				this.m_provoked = true;
+			}
+		}
+	}
 
     public override void _Ready()
     {
@@ -25,6 +47,8 @@ public partial class Enemy : CharacterBody3D
 		m_navAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
 		m_animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		m_player = (Player)GetTree().GetFirstNodeInGroup("player");
+		m_hitpoints = maxHitPoints;
+		m_provoked = false;
     }
 
     public override void _Process(double delta)
@@ -86,6 +110,6 @@ public partial class Enemy : CharacterBody3D
 
 	public void Attack()
 	{
-
+		m_player.HitPoints = m_player.HitPoints - damage;
 	}
 }

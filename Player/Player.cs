@@ -11,19 +11,36 @@ public partial class Player : CharacterBody3D
 	public float mouseHSensetvity = 0.001f;
 	[Export]
     public float mouseVSensetvity = 0.001f;
+    [Export]
+    public int maxHitPoints = 100;
 
     // Get the gravity from the project settings to be synced with RigidBody nodes.
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 	private float m_fallMultiplier = 2.0f;
 	private Vector2 m_mouseMotion = Vector2.Zero;
+    private int m_hitpoints = 100;
+    private Node3D m_cameraPivot;
 
-	private Node3D m_cameraPivot;
+    public int HitPoints
+    {
+        get { return m_hitpoints; }
+        set
+        {
+            m_hitpoints = value;
+            if (m_hitpoints <= 0)
+            {
+                GetTree().Quit();
+            }
+        }
+    }
+
 
     public override void _Ready()
     {
         base._Ready();
 		m_cameraPivot = GetNode<Node3D>("CameraPivot");
 		Input.MouseMode = Input.MouseModeEnum.Captured;
+		m_hitpoints = maxHitPoints;
     }
 
     public override void _PhysicsProcess(double delta)
