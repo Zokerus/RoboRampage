@@ -14,6 +14,8 @@ public partial class Hit_Scan_Weapon : Node3D
 	public Node3D weaponMesh = null;
 	[Export]
 	public GpuParticles3D muzzleFlash = null;
+	[Export]
+	public PackedScene sparks = null;
 	
 
 	private Timer m_coolDownTimer;
@@ -56,6 +58,12 @@ public partial class Hit_Scan_Weapon : Node3D
 			if(m_rayCast3D.GetCollider() is Enemy enemy)
 			{
 				enemy.HitPoints = enemy.HitPoints - (int)weaponDamage;
+			}
+			if (sparks != null)
+			{
+				GpuParticles3D impactSparks = sparks.Instantiate<GpuParticles3D>();
+				AddChild(impactSparks);
+				impactSparks.GlobalPosition = m_rayCast3D.GetCollisionPoint();
 			}
 		}
     }
