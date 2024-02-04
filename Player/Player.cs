@@ -20,12 +20,19 @@ public partial class Player : CharacterBody3D
 	private Vector2 m_mouseMotion = Vector2.Zero;
     private int m_hitpoints = 100;
     private Node3D m_cameraPivot;
+	private AnimationPlayer m_damageAnimationPlayer;
 
     public int HitPoints
     {
         get { return m_hitpoints; }
         set
         {
+			if (m_hitpoints > value)
+			{
+                m_damageAnimationPlayer.Stop();
+				m_damageAnimationPlayer.Play("take_damage");
+
+            }
             m_hitpoints = value;
             if (m_hitpoints <= 0)
             {
@@ -41,6 +48,7 @@ public partial class Player : CharacterBody3D
 		m_cameraPivot = GetNode<Node3D>("CameraPivot");
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		m_hitpoints = maxHitPoints;
+        m_damageAnimationPlayer = GetNode<AnimationPlayer>("CanvasLayer/DamageTexture/DamageAnimationPlayer");
     }
 
     public override void _PhysicsProcess(double delta)
