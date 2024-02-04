@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Diagnostics;
+using System.IO;
 
 public partial class Hit_Scan_Weapon : Node3D
 {
@@ -14,14 +15,17 @@ public partial class Hit_Scan_Weapon : Node3D
 	public Node3D weaponMesh = null;
 	[Export]
 	public GpuParticles3D muzzleFlash = null;
+	//[Export]
+	//public String sparksPath = null;
 	[Export]
-	public PackedScene sparks = null;
+	public PackedScene sparksScene = null;
 	
 
 	private Timer m_coolDownTimer;
 	private RayCast3D m_rayCast3D;
 	private Vector3 m_weaponPosition;
 	private GpuParticles3D m_muzzelFlash;
+	private PackedScene m_sparks;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -30,11 +34,12 @@ public partial class Hit_Scan_Weapon : Node3D
 		m_coolDownTimer = GetNode<Timer>("CoolDownTimer");
 		m_rayCast3D = GetNode<RayCast3D>("RayCast3D");
 		m_weaponPosition = weaponMesh.Position;
+        //m_sparks = ResourceLoader.Load<PackedScene>(sparksPath);
 		if (muzzleFlash != null )
 		{
 			muzzleFlash.Lifetime = 1.0f / fireRate;
 		}
-	}
+    }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
@@ -58,9 +63,9 @@ public partial class Hit_Scan_Weapon : Node3D
 			{
 				enemy.HitPoints = enemy.HitPoints - (int)weaponDamage;
 			}
-			if (sparks != null)
+			  if (sparksScene != null)
 			{
-				GpuParticles3D impactSparks = sparks.Instantiate<GpuParticles3D>();
+				GpuParticles3D impactSparks = sparksScene.Instantiate<GpuParticles3D>();
 				AddChild(impactSparks);
 				impactSparks.GlobalPosition = m_rayCast3D.GetCollisionPoint();
 			}
