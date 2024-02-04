@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6c5ogwv3ss7q"]
+
+[ext_resource type="FontFile" uid="uid://kh51hphx1as5" path="res://Assets/Font/Staatliches-Regular.ttf" id="1_avset"]
+[ext_resource type="Script" path="res://Menu/GameOverMenu.cs" id="2_xw8v3"]
+
+[sub_resource type="Theme" id="Theme_ybb07"]
+default_font = ExtResource("1_avset")
+default_font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_og606"]
+font_size = 96
+
+[node name="GameOverScreen" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("2_xw8v3")
+
+[node name="GameOverMenu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ybb07")
+
+[node name="CenterContainer" type="CenterContainer" parent="GameOverMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverMenu/CenterContainer"]
+custom_minimum_size = Vector2(512, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GameOverMenu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Du bist tot"
+label_settings = SubResource("LabelSettings_og606")
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="GameOverMenu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Neuer Versuch"
+
+[node name="QuitButton" type="Button" parent="GameOverMenu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Ich bin fertig"
+
+[connection signal="pressed" from="GameOverMenu/CenterContainer/VBoxContainer/RestartButton" to="." method="OnRestartButtonClick"]
+[connection signal="pressed" from="GameOverMenu/CenterContainer/VBoxContainer/QuitButton" to="." method="OnQuitButtonClick"]

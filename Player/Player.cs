@@ -21,6 +21,7 @@ public partial class Player : CharacterBody3D
     private int m_hitpoints = 100;
     private Node3D m_cameraPivot;
 	private AnimationPlayer m_damageAnimationPlayer;
+	private GameOverMenu m_gameOverMenu;
 
     public int HitPoints
     {
@@ -36,7 +37,7 @@ public partial class Player : CharacterBody3D
             m_hitpoints = value;
             if (m_hitpoints <= 0)
             {
-                GetTree().Quit();
+				m_gameOverMenu.GameOver();
             }
         }
     }
@@ -49,6 +50,7 @@ public partial class Player : CharacterBody3D
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		m_hitpoints = maxHitPoints;
         m_damageAnimationPlayer = GetNode<AnimationPlayer>("CanvasLayer/DamageTexture/DamageAnimationPlayer");
+		m_gameOverMenu = GetNode<GameOverMenu>("GameOverScreen");
     }
 
     public override void _PhysicsProcess(double delta)
