@@ -12,6 +12,8 @@ public partial class Hit_Scan_Weapon : Node3D
 	[Export]
 	public float weaponDamage = 15;
 	[Export]
+	public bool automatic = false;
+	[Export]
 	public Node3D weaponMesh = null;
 	[Export]
 	public GpuParticles3D muzzleFlash = null;
@@ -44,7 +46,7 @@ public partial class Hit_Scan_Weapon : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-        if (Input.IsActionPressed("fire", true) && m_coolDownTimer.IsStopped())
+        if (((Input.IsActionPressed("fire") && automatic) || (Input.IsActionJustPressed("fire") && !automatic)) && m_coolDownTimer.IsStopped())
 		{ 
 			Shoot();
         }

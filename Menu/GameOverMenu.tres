@@ -43,11 +43,11 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-257.794, 23.7712)
+graph_offset = Vector2(-348.793, -101.853)
 mode = 1
 flags/light_only = false
 nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_mubbg")
-nodes/fragment/2/position = Vector2(60, 120)
+nodes/fragment/2/position = Vector2(180, 120)
 nodes/fragment/3/node = SubResource("VisualShaderNodeInput_le2hu")
 nodes/fragment/3/position = Vector2(-320, 40)
 nodes/fragment/4/node = SubResource("VisualShaderNodeFloatConstant_y8nte")
