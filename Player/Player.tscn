@@ -1,9 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://clgvgiwp5qt6x"]
+[gd_scene load_steps=14 format=3 uid="uid://clgvgiwp5qt6x"]
 
 [ext_resource type="Script" path="res://Player/Player.cs" id="1_mo8ke"]
 [ext_resource type="Script" path="res://Player/SmoothCamera.cs" id="2_axacq"]
 [ext_resource type="PackedScene" uid="uid://d2g2wxsu7ujle" path="res://Weapons/Rifle.tscn" id="3_5jfa3"]
+[ext_resource type="PackedScene" uid="uid://1n2vg2sns3fd" path="res://Weapons/SMG.tscn" id="3_tydtx"]
 [ext_resource type="Script" path="res://Player/Crosshair.cs" id="3_uwdv0"]
+[ext_resource type="Script" path="res://Player/WeaponHandler.cs" id="4_tck4a"]
 [ext_resource type="Texture2D" uid="uid://dmbqa3ddqd5xq" path="res://Player/damage.png" id="5_e7kjd"]
 [ext_resource type="PackedScene" uid="uid://c6c5ogwv3ss7q" path="res://Menu/GameOverMenu.tscn" id="6_hxmry"]
 
@@ -91,8 +93,6 @@ cull_mask = 1048573
 current = true
 script = ExtResource("2_axacq")
 
-[node name="Rifle" parent="CameraPivot/SmoothCamera" instance=ExtResource("3_5jfa3")]
-
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="CameraPivot/SmoothCamera"]
 remote_path = NodePath("../../../CanvasLayer/SubViewportContainer/SubViewport/WeaponCamera")
 
@@ -104,6 +104,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Crosshair" type="Control" parent="CanvasLayer/CenterContainer"]
 layout_mode = 2
@@ -128,6 +129,15 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 cull_mask = 2
 fov = 40.0
 
+[node name="WeaponHandler" type="Node3D" parent="CanvasLayer/SubViewportContainer/SubViewport/WeaponCamera" node_paths=PackedStringArray("Weapon_1", "Weapon_2")]
+script = ExtResource("4_tck4a")
+Weapon_1 = NodePath("Rifle")
+Weapon_2 = NodePath("SMG")
+
+[node name="Rifle" parent="CanvasLayer/SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" instance=ExtResource("3_5jfa3")]
+
+[node name="SMG" parent="CanvasLayer/SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" instance=ExtResource("3_tydtx")]
+
 [node name="DamageTexture" type="TextureRect" parent="CanvasLayer"]
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
@@ -136,6 +146,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(576, 324)
+mouse_filter = 2
 texture = ExtResource("5_e7kjd")
 
 [node name="DamageAnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/DamageTexture"]
