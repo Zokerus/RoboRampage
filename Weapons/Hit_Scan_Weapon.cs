@@ -14,6 +14,8 @@ public partial class Hit_Scan_Weapon : Node3D
 	[Export]
 	public bool automatic = false;
 	[Export]
+	public AmmoHandler.Ammo_Type ammoType;
+	[Export]
 	public Node3D weaponMesh = null;
 	[Export]
 	public GpuParticles3D muzzleFlash = null;
@@ -21,6 +23,8 @@ public partial class Hit_Scan_Weapon : Node3D
 	//public String sparksPath = null;
 	[Export]
 	public PackedScene sparksScene = null;
+	[Export]
+	public AmmoHandler AmmoHandler = null;
 	
 
 	private Timer m_coolDownTimer;
@@ -48,7 +52,10 @@ public partial class Hit_Scan_Weapon : Node3D
 	{
         if (((Input.IsActionPressed("fire") && automatic) || (Input.IsActionJustPressed("fire") && !automatic)) && m_coolDownTimer.IsStopped())
 		{ 
-			Shoot();
+			if (AmmoHandler.HasAmmo(ammoType))
+			{
+				Shoot();
+			}
         }
 
 		weaponMesh.Position = weaponMesh.Position.Lerp(m_weaponPosition, (float)delta * 10.0f);
@@ -57,7 +64,8 @@ public partial class Hit_Scan_Weapon : Node3D
 	private void Shoot()
 	{
         m_coolDownTimer.Start(1.0f / fireRate);
-		weaponMesh.Position = new Vector3(weaponMesh.Position.X, weaponMesh.Position.Y, weaponMesh.Position.Z + recoil);
+        AmmoHandler.UseAmmo(ammoType);
+        weaponMesh.Position = new Vector3(weaponMesh.Position.X, weaponMesh.Position.Y, weaponMesh.Position.Z + recoil);
         muzzleFlash.Restart();
 		if (m_rayCast3D.IsColliding())
 		{

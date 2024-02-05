@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://clgvgiwp5qt6x"]
+[gd_scene load_steps=15 format=3 uid="uid://clgvgiwp5qt6x"]
 
 [ext_resource type="Script" path="res://Player/Player.cs" id="1_mo8ke"]
 [ext_resource type="Script" path="res://Player/SmoothCamera.cs" id="2_axacq"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Player/WeaponHandler.cs" id="4_tck4a"]
 [ext_resource type="Texture2D" uid="uid://dmbqa3ddqd5xq" path="res://Player/damage.png" id="5_e7kjd"]
 [ext_resource type="PackedScene" uid="uid://c6c5ogwv3ss7q" path="res://Menu/GameOverMenu.tscn" id="6_hxmry"]
+[ext_resource type="Script" path="res://Player/AmmoHandler.cs" id="7_ffwuy"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_5dami"]
 
@@ -134,9 +135,14 @@ script = ExtResource("4_tck4a")
 Weapon_1 = NodePath("Rifle")
 Weapon_2 = NodePath("SMG")
 
-[node name="Rifle" parent="CanvasLayer/SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" instance=ExtResource("3_5jfa3")]
+[node name="Rifle" parent="CanvasLayer/SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" node_paths=PackedStringArray("AmmoHandler") instance=ExtResource("3_5jfa3")]
+AmmoHandler = NodePath("../../AmmoHandler")
 
-[node name="SMG" parent="CanvasLayer/SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" instance=ExtResource("3_tydtx")]
+[node name="SMG" parent="CanvasLayer/SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" node_paths=PackedStringArray("AmmoHandler") instance=ExtResource("3_tydtx")]
+AmmoHandler = NodePath("../../AmmoHandler")
+
+[node name="AmmoHandler" type="Node" parent="CanvasLayer/SubViewportContainer/SubViewport/WeaponCamera"]
+script = ExtResource("7_ffwuy")
 
 [node name="DamageTexture" type="TextureRect" parent="CanvasLayer"]
 modulate = Color(1, 1, 1, 0)

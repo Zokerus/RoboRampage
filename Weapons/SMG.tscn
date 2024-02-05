@@ -28,6 +28,7 @@ size = Vector3(0.1, 0.1, 0.1)
 
 [node name="SMG" node_paths=PackedStringArray("weaponMesh", "muzzleFlash") instance=ExtResource("1_nq4qp")]
 automatic = true
+ammoType = 1
 weaponMesh = NodePath("SMG")
 muzzleFlash = NodePath("MuzzleFlash")
 
