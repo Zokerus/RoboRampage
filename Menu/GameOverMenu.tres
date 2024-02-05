@@ -1,11 +1,57 @@
-[gd_resource type="VisualShader" format=3 uid="uid://w1r1r57tdtik"]
+[gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://w1r1r57tdtik"]
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_mubbg"]
+source = 5
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_le2hu"]
+input_name = "screen_uv"
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_y8nte"]
+constant = 2.0
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_y7x57"]
+parameter_name = "Screen"
+texture_type = 1
+texture_filter = 4
+texture_source = 1
 
 [resource]
 code = "shader_type canvas_item;
 render_mode blend_mix;
 
+uniform sampler2D Screen : source_color, filter_linear_mipmap, hint_screen_texture;
 
 
+
+void fragment() {
+// Input:3
+	vec2 n_out3p0 = SCREEN_UV;
+
+
+// FloatConstant:4
+	float n_out4p0 = 2.000000;
+
+
+	vec4 n_out2p0;
+// Texture2D:2
+	n_out2p0 = textureLod(Screen, n_out3p0, n_out4p0);
+
+
+// Output:0
+	COLOR.rgb = vec3(n_out2p0.xyz);
+
+
+}
 "
+graph_offset = Vector2(-257.794, 23.7712)
 mode = 1
 flags/light_only = false
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_mubbg")
+nodes/fragment/2/position = Vector2(60, 120)
+nodes/fragment/3/node = SubResource("VisualShaderNodeInput_le2hu")
+nodes/fragment/3/position = Vector2(-320, 40)
+nodes/fragment/4/node = SubResource("VisualShaderNodeFloatConstant_y8nte")
+nodes/fragment/4/position = Vector2(-280, 120)
+nodes/fragment/5/node = SubResource("VisualShaderNodeTexture2DParameter_y7x57")
+nodes/fragment/5/position = Vector2(-360, 200)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 3, 0, 2, 0, 4, 0, 2, 1, 5, 0, 2, 2)
