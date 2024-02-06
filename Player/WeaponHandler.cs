@@ -4,9 +4,9 @@ using System;
 public partial class WeaponHandler : Node3D
 {
 	[Export]
-	public Node3D Weapon_1 { get; set; }
+	public Hit_Scan_Weapon Weapon_1 { get; set; }
 	[Export]
-	public Node3D Weapon_2 { get; set; }
+	public Hit_Scan_Weapon Weapon_2 { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -42,14 +42,15 @@ public partial class WeaponHandler : Node3D
 		}
     }
 
-    private void Equip(Node3D active_weapon)
+    private void Equip(Hit_Scan_Weapon active_weapon)
 	{
-		foreach( Node3D weapon in this.GetChildren())
+		foreach(Hit_Scan_Weapon weapon in this.GetChildren())
 		{
 			if(weapon == active_weapon)
 			{
 				weapon.Show();
 				weapon.SetProcess(true);
+				weapon.AmmoHandler.UpdateAmmoLabel(weapon.ammoType);
 			}
 			else
 			{
@@ -63,7 +64,7 @@ public partial class WeaponHandler : Node3D
 	{
 		for(int index = 0; index < this.GetChildren().Count; index++) 
 		{
-			if(this.GetChild<Node3D>(index).Visible)
+			if(this.GetChild<Hit_Scan_Weapon>(index).Visible)
 			{
 				return index;
 			}
@@ -75,13 +76,13 @@ public partial class WeaponHandler : Node3D
 	{
 		int index = GetCurrentIndex();
 		index = Mathf.Wrap(index + 1, 0, this.GetChildren().Count);
-		Equip(this.GetChild<Node3D>(index));
+		Equip(this.GetChild<Hit_Scan_Weapon>(index));
 	}
 
     private void PrevWeapon()
     {
         int index = GetCurrentIndex();
         index = Mathf.Wrap(index - 1, 0, this.GetChildren().Count);
-        Equip(this.GetChild<Node3D>(index));
+        Equip(this.GetChild<Hit_Scan_Weapon>(index));
     }
 }
