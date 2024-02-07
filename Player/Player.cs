@@ -13,6 +13,7 @@ public partial class Player : CharacterBody3D
     public float mouseVSensetvity = 0.001f;
     [Export]
     public int maxHitPoints = 100;
+	[Export] public float aimMultiplier = 0.7f;
 
     // Get the gravity from the project settings to be synced with RigidBody nodes.
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
@@ -22,7 +23,12 @@ public partial class Player : CharacterBody3D
     private Node3D m_cameraPivot;
 	private AnimationPlayer m_damageAnimationPlayer;
 	private GameOverMenu m_gameOverMenu;
-	public AmmoHandler m_ammoHandler;
+	private SmoothCamera m_smoothCamera;
+	private Camera3D m_weaponCamera;
+	private float m_smoothCameraFOV = 1.0f;
+    private float m_weaponCameraFOV = 1.0f;
+
+    public AmmoHandler m_ammoHandler;
 
     public int HitPoints
     {
@@ -52,7 +58,26 @@ public partial class Player : CharacterBody3D
 		m_hitpoints = maxHitPoints;
         m_damageAnimationPlayer = GetNode<AnimationPlayer>("CanvasLayer/DamageTexture/DamageAnimationPlayer");
 		m_gameOverMenu = GetNode<GameOverMenu>("GameOverScreen");
+		m_smoothCamera = GetNode<SmoothCamera>("CameraPivot/SmoothCamera");
+		m_weaponCamera = GetNode<Camera3D>("CanvasLayer/SubViewportContainer/SubViewport/WeaponCamera");
 		m_ammoHandler = GetNode<AmmoHandler>("%AmmoHandler");
+		m_smoothCameraFOV = m_smoothCamera.Fov;
+		m_weaponCameraFOV = m_weaponCamera.Fov;
+    }
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+		if(Input.IsActionPressed("aim"))
+		{
+			m_smoothCamera.Fov = Mathf.Lerp(m_smoothCamera.Fov, m_smoothCameraFOV * aimMultiplier, (float)delta * 20.0f);
+			m_weaponCamera.Fov = Mathf.Lerp(m_weaponCamera.Fov, m_weaponCameraFOV * aimMultiplier, (float)delta * 20.0f);
+        }
+		else
+		{
+            m_smoothCamera.Fov = Mathf.Lerp(m_smoothCamera.Fov, m_smoothCameraFOV, (float)delta * 30.0f);
+            m_weaponCamera.Fov = Mathf.Lerp(m_weaponCamera.Fov, m_weaponCameraFOV, (float)delta * 30.0f);
+        }
     }
 
     public override void _PhysicsProcess(double delta)
@@ -83,6 +108,11 @@ public partial class Player : CharacterBody3D
 		{
 			velocity.X = direction.X * Speed;
 			velocity.Z = direction.Z * Speed;
+			if(Input.IsActionPressed("aim"))
+			{
+                velocity.X *= aimMultiplier;
+				velocity.Z *= aimMultiplier; 
+            }
 		}
 		else
 		{
@@ -101,6 +131,10 @@ public partial class Player : CharacterBody3D
 		if(@event is InputEventMouseMotion mouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured)
 		{
 			m_mouseMotion = -mouseMotion.Relative;
+			if(Input.IsActionPressed("aim"))
+			{
+				m_mouseMotion *= aimMultiplier;
+			}
 		}
 
 		if(@event.IsActionPressed("escape"))
