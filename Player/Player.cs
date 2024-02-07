@@ -22,6 +22,7 @@ public partial class Player : CharacterBody3D
     private Node3D m_cameraPivot;
 	private AnimationPlayer m_damageAnimationPlayer;
 	private GameOverMenu m_gameOverMenu;
+	public AmmoHandler m_ammoHandler;
 
     public int HitPoints
     {
@@ -51,6 +52,7 @@ public partial class Player : CharacterBody3D
 		m_hitpoints = maxHitPoints;
         m_damageAnimationPlayer = GetNode<AnimationPlayer>("CanvasLayer/DamageTexture/DamageAnimationPlayer");
 		m_gameOverMenu = GetNode<GameOverMenu>("GameOverScreen");
+		m_ammoHandler = GetNode<AmmoHandler>("%AmmoHandler");
     }
 
     public override void _PhysicsProcess(double delta)

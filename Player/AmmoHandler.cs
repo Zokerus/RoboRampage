@@ -44,6 +44,11 @@ public partial class AmmoHandler : Node
 	public void UpdateAmmoLabel(Ammo_Type type)
 	{
 		ammoLabel.Text = m_ammoStorage[type].ToString();
+    }
 
+	public void AddAmmo(Ammo_Type type, int amount)
+	{
+        m_ammoStorage[type] += amount;
+		UpdateAmmoLabel(type);
     }
 }
