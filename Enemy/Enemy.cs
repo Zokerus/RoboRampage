@@ -6,8 +6,6 @@ public partial class Enemy : CharacterBody3D
 	[Export]
 	public float speed = 5.0f;
 	[Export]
-	public float jumpHeight = 1.0f;
-	[Export]
 	public float aggroRange = 12.0f;
 	[Export]
 	public float attackRange = 1.5f;
