@@ -17,7 +17,8 @@ public partial class Enemy : CharacterBody3D
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 	private NavigationAgent3D m_navAgent;
-	private AnimationPlayer m_animPlayer;
+	private AnimationTree m_animTree;
+	private AnimationNodeStateMachinePlayback m_playback;
 	private Player m_player;
 	private bool m_provoked = false;
 	private int m_hitpoints = 100;
@@ -43,10 +44,11 @@ public partial class Enemy : CharacterBody3D
     {
         base._Ready();
 		m_navAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
-		m_animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		m_animTree = GetNode<AnimationTree>("AnimationTree");
 		m_player = (Player)GetTree().GetFirstNodeInGroup("player");
 		m_hitpoints = maxHitPoints;
 		m_provoked = false;
+		m_playback = m_animTree.Get("parameters/playback").As<AnimationNodeStateMachinePlayback>();
     }
 
     public override void _Process(double delta)
@@ -79,7 +81,8 @@ public partial class Enemy : CharacterBody3D
 		{
 			if (distance <= attackRange)
 			{
-				m_animPlayer.Play("attack");
+				m_playback.Travel("attack");
+				//m_animPlayer.Play("attack");
 			}
 		}
 
