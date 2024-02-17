@@ -1,0 +1,125 @@
+[gd_resource type="VisualShader" load_steps=15 format=3 uid="uid://bnorwvo5g5b4n"]
+
+[sub_resource type="VisualShaderNodeSmoothStep" id="VisualShaderNodeSmoothStep_bjs3p"]
+default_input_values = [0, 0.0, 1, 0.5, 2, 0.5]
+
+[sub_resource type="Gradient" id="Gradient_wgcbu"]
+offsets = PackedFloat32Array(0, 0.517241, 1)
+colors = PackedColorArray(1, 1, 0.184314, 1, 1, 0.25098, 0, 1, 0.580392, 0.141176, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2dxsk"]
+gradient = SubResource("Gradient_wgcbu")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_dpe8u"]
+texture = SubResource("GradientTexture1D_2dxsk")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ucvoj"]
+noise_type = 2
+seed = 2
+fractal_type = 0
+cellular_jitter = 0.75
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w4bkm"]
+seamless = true
+noise = SubResource("FastNoiseLite_ucvoj")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_3j6td"]
+texture = SubResource("NoiseTexture2D_w4bkm")
+
+[sub_resource type="VisualShaderNodeUVFunc" id="VisualShaderNodeUVFunc_fdtkn"]
+default_input_values = [1, Vector2(0.01, 0.01), 2, Vector2(0, 0)]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_7dnf2"]
+input_name = "time"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wk7x5"]
+seed = 5
+fractal_type = 0
+cellular_jitter = 0.75
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uy32i"]
+seamless = true
+noise = SubResource("FastNoiseLite_wk7x5")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_hab3x"]
+texture = SubResource("NoiseTexture2D_uy32i")
+
+[sub_resource type="VisualShaderNodeUVFunc" id="VisualShaderNodeUVFunc_1bwy8"]
+default_input_values = [1, Vector2(-0.02, -0.02), 2, Vector2(0, 0)]
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_bmh8g"]
+operator = 2
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform sampler2D tex_frg_2;
+uniform sampler2D tex_frg_5;
+uniform sampler2D tex_frg_11;
+
+
+
+void fragment() {
+// Input:4
+	float n_out4p0 = TIME;
+
+
+// UVFunc:3
+	vec2 n_in3p1 = vec2(0.01000, 0.01000);
+	vec2 n_out3p0 = vec2(n_out4p0) * n_in3p1 + UV;
+
+
+// Texture2D:2
+	vec4 n_out2p0 = texture(tex_frg_2, n_out3p0);
+
+
+// UVFunc:6
+	vec2 n_in6p1 = vec2(-0.02000, -0.02000);
+	vec2 n_out6p0 = vec2(n_out4p0) * n_in6p1 + UV;
+
+
+// Texture2D:5
+	vec4 n_out5p0 = texture(tex_frg_5, n_out6p0);
+
+
+// FloatOp:9
+	float n_out9p0 = n_out2p0.x * n_out5p0.x;
+
+
+// SmoothStep:10
+	float n_in10p0 = 0.00000;
+	float n_in10p1 = 0.50000;
+	float n_out10p0 = smoothstep(n_in10p0, n_in10p1, n_out9p0);
+
+
+// Texture2D:11
+	vec4 n_out11p0 = texture(tex_frg_11, vec2(n_out10p0));
+
+
+// Output:0
+	ALBEDO = vec3(n_out11p0.xyz);
+	METALLIC = n_out11p0.x;
+	EMISSION = vec3(n_out11p0.xyz);
+
+
+}
+"
+nodes/fragment/0/position = Vector2(1840, 160)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_3j6td")
+nodes/fragment/2/position = Vector2(680, 260)
+nodes/fragment/3/node = SubResource("VisualShaderNodeUVFunc_fdtkn")
+nodes/fragment/3/position = Vector2(460, 260)
+nodes/fragment/4/node = SubResource("VisualShaderNodeInput_7dnf2")
+nodes/fragment/4/position = Vector2(100, 440)
+nodes/fragment/5/node = SubResource("VisualShaderNodeTexture_hab3x")
+nodes/fragment/5/position = Vector2(680, 500)
+nodes/fragment/6/node = SubResource("VisualShaderNodeUVFunc_1bwy8")
+nodes/fragment/6/position = Vector2(440, 500)
+nodes/fragment/9/node = SubResource("VisualShaderNodeFloatOp_bmh8g")
+nodes/fragment/9/position = Vector2(920, 480)
+nodes/fragment/10/node = SubResource("VisualShaderNodeSmoothStep_bjs3p")
+nodes/fragment/10/position = Vector2(1100, 440)
+nodes/fragment/11/node = SubResource("VisualShaderNodeTexture_dpe8u")
+nodes/fragment/11/position = Vector2(1360, 380)
+nodes/fragment/connections = PackedInt32Array(3, 0, 2, 0, 4, 0, 3, 2, 6, 0, 5, 0, 4, 0, 6, 2, 2, 0, 9, 0, 5, 0, 9, 1, 9, 0, 10, 2, 10, 0, 11, 0, 11, 0, 0, 0, 11, 0, 0, 5, 11, 0, 0, 2)
