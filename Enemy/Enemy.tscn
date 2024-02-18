@@ -122,6 +122,7 @@ transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition
 
 [node name="Enemy" type="CharacterBody3D"]
 script = ExtResource("1_7xv4w")
+aggroRange = 15.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_41ec3")
@@ -130,6 +131,7 @@ shape = SubResource("CapsuleShape3D_41ec3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_height_offset = 0.01
 debug_enabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

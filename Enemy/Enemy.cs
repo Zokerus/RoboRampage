@@ -106,7 +106,10 @@ public partial class Enemy : CharacterBody3D
 	{
 		Vector3 adjustedDirection = direction;
 		adjustedDirection.Y = 0;
-		this.LookAt(this.GlobalPosition + adjustedDirection, Vector3.Up, true);
+		if (adjustedDirection != Vector3.Zero)
+		{
+			this.LookAt(this.GlobalPosition + adjustedDirection, Vector3.Up, true);
+		}
 	}
 
 	public void Attack()

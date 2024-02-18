@@ -99,7 +99,6 @@ void fragment() {
 
 // Output:0
 	ALBEDO = vec3(n_out11p0.xyz);
-	METALLIC = n_out11p0.x;
 	EMISSION = vec3(n_out11p0.xyz);
 
 
@@ -122,4 +121,4 @@ nodes/fragment/10/node = SubResource("VisualShaderNodeSmoothStep_bjs3p")
 nodes/fragment/10/position = Vector2(1100, 440)
 nodes/fragment/11/node = SubResource("VisualShaderNodeTexture_dpe8u")
 nodes/fragment/11/position = Vector2(1360, 380)
-nodes/fragment/connections = PackedInt32Array(3, 0, 2, 0, 4, 0, 3, 2, 6, 0, 5, 0, 4, 0, 6, 2, 2, 0, 9, 0, 5, 0, 9, 1, 9, 0, 10, 2, 10, 0, 11, 0, 11, 0, 0, 0, 11, 0, 0, 5, 11, 0, 0, 2)
+nodes/fragment/connections = PackedInt32Array(3, 0, 2, 0, 4, 0, 3, 2, 6, 0, 5, 0, 4, 0, 6, 2, 2, 0, 9, 0, 5, 0, 9, 1, 9, 0, 10, 2, 10, 0, 11, 0, 11, 0, 0, 0, 11, 0, 0, 5)
