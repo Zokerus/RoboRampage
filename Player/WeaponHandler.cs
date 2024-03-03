@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Reflection;
 
 public partial class WeaponHandler : Node3D
 {
@@ -84,5 +85,10 @@ public partial class WeaponHandler : Node3D
         int index = GetCurrentIndex();
         index = Mathf.Wrap(index - 1, 0, this.GetChildren().Count);
         Equip(this.GetChild<Hit_Scan_Weapon>(index));
+    }
+
+	public AmmoHandler.Ammo_Type GetWeaponAmmo()
+	{
+		return this.GetChild<Hit_Scan_Weapon>(GetCurrentIndex()).ammoType;
     }
 }

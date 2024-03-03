@@ -146,10 +146,11 @@ AmmoHandler = NodePath("../../AmmoHandler")
 [node name="SMG" parent="CanvasLayer/SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" node_paths=PackedStringArray("AmmoHandler") instance=ExtResource("3_tydtx")]
 AmmoHandler = NodePath("../../AmmoHandler")
 
-[node name="AmmoHandler" type="Node" parent="CanvasLayer/SubViewportContainer/SubViewport/WeaponCamera" node_paths=PackedStringArray("ammoLabel")]
+[node name="AmmoHandler" type="Node" parent="CanvasLayer/SubViewportContainer/SubViewport/WeaponCamera" node_paths=PackedStringArray("ammoLabel", "weaponHandler")]
 unique_name_in_owner = true
 script = ExtResource("7_ffwuy")
 ammoLabel = NodePath("../../../../MarginContainer/AmmoLabel")
+weaponHandler = NodePath("../WeaponHandler")
 
 [node name="DamageTexture" type="TextureRect" parent="CanvasLayer"]
 modulate = Color(1, 1, 1, 0)

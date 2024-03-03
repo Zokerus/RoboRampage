@@ -11,6 +11,7 @@ public partial class AmmoHandler : Node
 	}
 
 	[Export] public Label ammoLabel;
+	[Export] public WeaponHandler weaponHandler;
 
 	private Dictionary<Ammo_Type, int> m_ammoStorage = new Dictionary<Ammo_Type, int>() { {Ammo_Type.BULLET, 10}, { Ammo_Type.SMALL_BULLET, 60 } };
 
@@ -37,7 +38,7 @@ public partial class AmmoHandler : Node
 		if (HasAmmo(type))
 		{
 			m_ammoStorage[type] -= 1;
-			UpdateAmmoLabel(type);
+			UpdateAmmoLabel(weaponHandler.GetWeaponAmmo());
 		}
 	}
 
@@ -49,6 +50,6 @@ public partial class AmmoHandler : Node
 	public void AddAmmo(Ammo_Type type, int amount)
 	{
         m_ammoStorage[type] += amount;
-		UpdateAmmoLabel(type);
+		UpdateAmmoLabel(weaponHandler.GetWeaponAmmo());
     }
 }
